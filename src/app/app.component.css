@@ -1,0 +1,18 @@
+.pointer {
+    cursor: pointer;
+}
+
+.note-important {
+    background-color: rgba(255, 80, 80, .5);
+    border: 2px solid #ff5050;
+  }
+  
+  .note-social {
+    background-color: rgba(44, 171, 227, .5);
+    border: 2px solid #2cabe3;
+  }
+  
+  .note-business {
+    background-color: rgba(44, 208, 126, .5);
+    border: 2px solid #2cd07e;
+  }
