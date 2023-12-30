@@ -20,6 +20,8 @@ export class AppComponent implements OnInit {
   readonly Level = Level; 
   readonly DataState = DataState; 
   private dataSubject = new BehaviorSubject<CustomHttpResponse | undefined>(undefined); 
+  private isLoadingSubject = new BehaviorSubject<boolean>(false);
+  isLoading$ = this.isLoadingSubject.asObservable();
 
   constructor(private noteService: NoteService) { }
 
@@ -41,13 +43,16 @@ export class AppComponent implements OnInit {
   }
 
   saveNote(noteForm: NgForm): void {
+    this.isLoadingSubject.next(true);
     this.appState$ = this.noteService.save$(noteForm.value)
       .pipe(
         // if there is a response -> DataState.LOADED
         map(response => {
           this.dataSubject
-          .next(<CustomHttpResponse>{...this.dataSubject.value, notes: [response.notes![0], ...this.dataSubject.value!.notes!]});
+          .next({...response, notes: [response.notes![0], ...this.dataSubject.value!.notes!]});
           noteForm.reset({title: '', description: '', level: this.Level.HIGH });
+          document.getElementById('closeModal').click(); 
+          this.isLoadingSubject.next(false);
           return { dataState: DataState.LOADED, data: this.dataSubject.value };
         }),
         // first state is LOADING

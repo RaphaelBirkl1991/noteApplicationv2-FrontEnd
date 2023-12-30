@@ -1,5 +1,5 @@
 
-<div>{{ appState$ | async | json }}</div>
+<!-- <div>{{ appState$ | async | json }}</div> -->
 
 
 <div class="page-content container note-has-grid">
@@ -139,10 +139,10 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-danger" id="closeModal" data-dismiss="modal">Discard</button>
-                                    <button type="submit" [disabled]="noteForm.invalid" class="btn btn-info">
-                                      <i>class="fas fa-spinner fa-spin"></i>
-                                      <span>Saving...</span>
-                                      <span>Save</span>
+                                    <button type="submit" [disabled]="noteForm.invalid || (isLoading$ | async)" class="btn btn-info">
+                                      <i *ngIf="isLoading$ | async" class="fas fa-spinner fa-spin"></i>
+                                      <span *ngIf="isLoading$ | async">Saving...</span>
+                                      <span *ngIf="!(isLoading$ | async)">Save</span>
                                     </button>
                                 </div>
                             </form>
