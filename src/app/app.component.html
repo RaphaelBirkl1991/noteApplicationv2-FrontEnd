@@ -112,7 +112,7 @@
                 <div class="modal-body">
                     <div class="notes-box">
                         <div class="notes-content">
-                            <form>
+                            <form #noteForm="ngForm" (ngSubmit)="saveNote(noteForm)">
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
@@ -124,9 +124,9 @@
                                         <div class="note-title">
                                             <label>Priority</label>
                                             <select class="custom-select" ngModel="HIGH" required name="level">
-                                              <option></option> 
-                                              <option></option> 
-                                              <option></option>
+                                              <option [value]="Level.HIGH">{{ Level.HIGH }}</option>
+                                              <option [value]="Level.MEDIUM">{{ Level.MEDIUM }}</option>
+                                              <option [value]="Level.LOW">{{ Level.LOW }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-danger" id="closeModal" data-dismiss="modal">Discard</button>
-                                    <button type="submit" class="btn btn-info">
+                                    <button type="submit" [disabled]="noteForm.invalid" class="btn btn-info">
                                       <i>class="fas fa-spinner fa-spin"></i>
                                       <span>Saving...</span>
                                       <span>Save</span>
