@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   isLoading$ = this.isLoadingSubject.asObservable();
   private selectedNoteSubject= new Subject<Note>(); 
   selectedNote$ = this.selectedNoteSubject.asObservable(); 
+  private filteredSubject = new BehaviorSubject<Level>(Level.ALL);
+  filteredLevel$ = this.filteredSubject.asObservable();
 
   constructor(private noteService: NoteService) { }
 
@@ -88,6 +90,21 @@ export class AppComponent implements OnInit {
       })
     );
   }
+
+  filterNotes(level: Level): void {
+    this.filteredSubject.next(level);
+    this.appState$ = this.noteService.filterNotes$(level, this.dataSubject.value)
+    .pipe(
+      map(response => {;
+           return {dataState: DataState.LOADED, data: response}
+      }),
+      startWith({dataState: DataState.LOADED, data: this.dataSubject.value}),
+      catchError((error: string) => {
+        return of({dataState: DataState.ERROR, error})
+      })
+    );
+  }
+
 
 selectNote(note: Note): void {
 this.selectedNoteSubject.next(note); 
