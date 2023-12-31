@@ -81,7 +81,7 @@
                             </i></span>
                           <div class="ml-auto">
                               <div class="category-selector btn-group">
-                                  <a class="pointer nav-link label-group p-0" role="button" aria-haspopup="true" aria-expanded="true">
+                                  <a (click)="selectNote(note)" class="pointer nav-link label-group p-0" role="button" aria-haspopup="true" aria-expanded="true">
                                     <span class="mr-1"><i class="fa fa-edit remove-note"></i></span>
                                   </a>
                               </div>
@@ -174,7 +174,6 @@
                                   <div class="col-md-12 mb-3">
                                       <div class="note-title">
                                           <label>Title</label>
-                                          <input>
                                           <input name="title" required type="text" class="form-control" minlength="5" maxlength="255" placeholder="Title" />
                                       </div>
                                   </div>

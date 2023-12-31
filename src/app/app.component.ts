@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NoteService } from './service/note.service';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map, startWith, catchError } from 'rxjs/operators';
 import { AppState } from './interface/appstate';
 import { CustomHttpResponse } from './interface/custom-http-response';
@@ -23,6 +23,8 @@ export class AppComponent implements OnInit {
   private dataSubject = new BehaviorSubject<CustomHttpResponse | undefined>(undefined); 
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   isLoading$ = this.isLoadingSubject.asObservable();
+  private selectedNoteSubject= new Subject<Note>(); 
+  selectedNote$ = this.selectedNoteSubject.asObservable(); 
 
   constructor(private noteService: NoteService) { }
 
@@ -86,4 +88,11 @@ export class AppComponent implements OnInit {
       })
     );
   }
+
+selectNote(note: Note): void {
+this.selectedNoteSubject.next(note); 
+document.getElementById('editNoteButton').click(); 
+}
+
+
 }
