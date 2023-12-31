@@ -4,6 +4,7 @@ import { throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { CustomHttpResponse } from '../interface/custom-http-response';
 import { Note } from '../interface/note';
+import { Level } from '../enum/level';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +40,22 @@ export class NoteService {
       tap(console.log),
       catchError(this.handleError)
     );
+ 
 
+    filterNotes$ = (level: Level, data: CustomHttpResponse) => <Observable<CustomHttpResponse>>
+    new Observable<CustomHttpResponse>(subscriber => {
+      subscriber.next(level === Level.ALL ? data : 
+        <CustomHttpResponse> { ...data, message: data.notes.filter(note => note.level === level).length > 0 ?
+           `Notes filtered by ${level.toLowerCase()} priority` :
+          `No notes of ${level.toLowerCase()} priority found`,
+           notes: data.notes.filter(note => note.level === level)}); 
+           subscriber.complete(); 
+    }).pipe(
+      tap(console.log), 
+      catchError(this.handleError)
+    );
 
+ 
   delete$ = (noteId: number) => <Observable<CustomHttpResponse>>this.http.delete<CustomHttpResponse>
     (`${this.server}/note/delete/${noteId}`)
     .pipe(
