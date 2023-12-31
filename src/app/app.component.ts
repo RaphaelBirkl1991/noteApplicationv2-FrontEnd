@@ -112,4 +112,21 @@ document.getElementById('editNoteButton').click();
 }
 
 
+deleteNote(noteId: number): void {
+  this.appState$ = this.noteService.delete$(noteId)
+  .pipe(
+    map(response => {
+      this.dataSubject
+      .next({ ...response, 
+      notes: this.dataSubject.value.notes.filter(note => note.id !== response.notes[0].id)});
+      return {dataState: DataState.LOADED, data: this.dataSubject.value}
+}),
+    startWith({dataState: DataState.LOADED, data: this.dataSubject.value}),
+    catchError((error: string) => {
+      return of({dataState: DataState.ERROR, error})
+    })
+  );
+}
+
+
 }
