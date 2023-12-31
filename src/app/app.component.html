@@ -169,38 +169,39 @@
               <div class="modal-body">
                   <div class="notes-box">
                       <div class="notes-content">
-                          <form >
-                              <div class="row">
-                                  <div class="col-md-12 mb-3">
-                                      <div class="note-title">
-                                          <label>Title</label>
-                                          <input name="title" required type="text" class="form-control" minlength="5" maxlength="255" placeholder="Title" />
-                                      </div>
-                                  </div>
-                                  <div class="col-md-12 mb-3">
-                                      <div class="note-title">
-                                          <label>Priority</label>
-                                          <select class="custom-select"  required name="level">
-                                           <option></option>
-                                           <option></option>
-                                           <option></option>
-                                          </select>
-                                      </div>
+                        <form #editNoteForm="ngForm" (ngSubmit)="updateNote(editNoteForm.value)" *ngIf="(selectedNote$ | async) as selectedNote">
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="note-title">
+                                        <label>Title</label>
+                                        <input type="hidden" ngModel="{{ selectedNote.id }}" name="id" id="id">
+                                        <input ngModel="{{ selectedNote.title }}" name="title" required type="text" class="form-control" minlength="5" maxlength="255" placeholder="Title" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="note-title">
+                                        <label>Priority</label>
+                                        <select class="custom-select" ngModel="{{ selectedNote.level }}" required name="level">
+                                          <option [value]="Level.HIGH">{{ Level.HIGH }}</option>
+                                          <option [value]="Level.MEDIUM">{{ Level.MEDIUM }}</option>
+                                          <option [value]="Level.LOW">{{ Level.LOW }}</option>
+                                        </select>
+                                    </div>
                                   </div>
                                   <div class="col-md-12">
-                                      <div class="note-description">
-                                          <label>Description</label>
-                                          <textarea name="description" required class="form-control" minlength="10" maxlength="255" placeholder="Description" rows="3"></textarea>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="modal-footer">
-                                  <button class="btn btn-danger" id="closeModalEdit" data-dismiss="modal">Discard</button>
-                                  <button type="submit" class="btn btn-info">
-                                    <i> class="fas fa-spinner fa-spin"></i>
-                                    <span>Saving...</span>
-                                    <span>Save</span>
-                                  </button>
+                                    <div class="note-description">
+                                        <label>Description</label>
+                                        <textarea ngModel="{{ selectedNote.description }}" name="description" required class="form-control" minlength="10" maxlength="255" placeholder="Description" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" id="closeModalEdit" data-dismiss="modal">Discard</button>
+                                <button type="submit" [disabled]="editNoteForm.invalid || (isLoading$ | async)" class="btn btn-info">
+                                  <i *ngIf="isLoading$ | async" class="fas fa-spinner fa-spin"></i>
+                                  <span *ngIf="isLoading$ | async">Saving...</span>
+                                  <span *ngIf="!(isLoading$ | async)">Save</span>
+                                </button>
                               </div>
                           </form>
                       </div>

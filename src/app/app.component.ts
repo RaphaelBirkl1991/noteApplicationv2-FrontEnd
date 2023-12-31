@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
            note.id === response.notes[0].id)] = response.notes[0];
            this.dataSubject
            .next({...response, notes: this.dataSubject.value.notes}); 
-           // document.getELemenetById('closeModal').click();
+           document.getElementById('closeModalEdit').click();
            this.isLoadingSubject.next(false);
            return {dataState: DataState.LOADED, data: this.dataSubject.value}
       }),
