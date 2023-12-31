@@ -7,6 +7,7 @@ import { CustomHttpResponse } from './interface/custom-http-response';
 import { DataState } from './enum/datastate';
 import { Level } from './enum/level';
 import { NgForm } from '@angular/forms';
+import { Note } from './interface/note';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
 
-  appState$: Observable<AppState<CustomHttpResponse>> | undefined;
+  appState$: Observable<AppState<CustomHttpResponse>>;
   readonly Level = Level; 
   readonly DataState = DataState; 
   private dataSubject = new BehaviorSubject<CustomHttpResponse | undefined>(undefined); 
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
           return { dataState: DataState.LOADED, data: response }
         }),
         // first state is LOADING
-        startWith({ dataState: DataState.LOADING }),
+        startWith({ dataState: DataState.LOADED}),
          
         catchError((error: string) => {
           return of({ dataState: DataState.ERROR, error: error })
@@ -56,7 +57,7 @@ export class AppComponent implements OnInit {
           return { dataState: DataState.LOADED, data: this.dataSubject.value };
         }),
         // first state is LOADING
-        startWith({ dataState: DataState.LOADING, data: this.dataSubject.value}),
+        startWith({ dataState: DataState.LOADED, data: this.dataSubject.value}),
          
         catchError((error: string) => {
           return of({ dataState: DataState.ERROR, error: error })
@@ -64,6 +65,25 @@ export class AppComponent implements OnInit {
       );
   }
 
-// this is a comment to get a change to be able to commit ;) 
 
+  updateNote(note: Note): void {
+    this.isLoadingSubject.next(true);
+    this.appState$ = this.noteService.update$(note)
+    .pipe(
+      map(response => {
+        this.dataSubject.value.notes[this.dataSubject.value.notes.findIndex(note =>
+           note.id === response.notes[0].id)] = response.notes[0];
+           this.dataSubject
+           .next({...response, notes: this.dataSubject.value.notes}); 
+           // document.getELemenetById('closeModal').click();
+           this.isLoadingSubject.next(false);
+           return {dataState: DataState.LOADED, data: this.dataSubject.value}
+      }),
+      startWith({dataState: DataState.LOADED, data: this.dataSubject.value}),
+      catchError((error: string) => {
+        this.isLoadingSubject.next(false); 
+        return of({dataState: DataState.ERROR, error})
+      })
+    );
+  }
 }
