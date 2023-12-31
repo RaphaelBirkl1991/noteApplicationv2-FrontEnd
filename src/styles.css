@@ -1,6 +1,6 @@
 @import url('http://netdna.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css');
-/* @import '~ngx-toastr/toastr'; */
+@import '~ngx-toastr/toastr'; 
 
   	body{
     background: #edf1f5;

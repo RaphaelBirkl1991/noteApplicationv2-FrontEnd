@@ -8,6 +8,7 @@ import { DataState } from './enum/datastate';
 import { Level } from './enum/level';
 import { NgForm } from '@angular/forms';
 import { Note } from './interface/note';
+import { NotificationService } from './service/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -28,20 +29,24 @@ export class AppComponent implements OnInit {
   private filteredSubject = new BehaviorSubject<Level>(Level.ALL);
   filteredLevel$ = this.filteredSubject.asObservable();
 
-  constructor(private noteService: NoteService) { }
+  
+  constructor(private noteService: NoteService, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.appState$ = this.noteService.notes$
       .pipe(
         // if there is a response -> DataState.LOADED
         map(response => {
-          this.dataSubject.next(response)
+          this.dataSubject.next(response); 
+          this.notificationService.onSuccess(response.message);
+          this.filteredSubject.next(Level.ALL);
           return { dataState: DataState.LOADED, data: response }
         }),
         // first state is LOADING
         startWith({ dataState: DataState.LOADED}),
          
         catchError((error: string) => {
+          this.notificationService.onError(error);
           return of({ dataState: DataState.ERROR, error: error })
         })
       );
@@ -58,12 +63,14 @@ export class AppComponent implements OnInit {
           noteForm.reset({title: '', description: '', level: this.Level.HIGH });
           document.getElementById('closeModal').click(); 
           this.isLoadingSubject.next(false);
+          this.notificationService.onSuccess(response.message);
           return { dataState: DataState.LOADED, data: this.dataSubject.value };
         }),
         // first state is LOADING
         startWith({ dataState: DataState.LOADED, data: this.dataSubject.value}),
          
         catchError((error: string) => {
+          this.notificationService.onError(error);
           return of({ dataState: DataState.ERROR, error: error })
         })
       );
@@ -80,12 +87,15 @@ export class AppComponent implements OnInit {
            this.dataSubject
            .next({...response, notes: this.dataSubject.value.notes}); 
            document.getElementById('closeModalEdit').click();
+           this.filteredSubject.next(Level.ALL); 
            this.isLoadingSubject.next(false);
+           this.notificationService.onSuccess(response.message);
            return {dataState: DataState.LOADED, data: this.dataSubject.value}
       }),
       startWith({dataState: DataState.LOADED, data: this.dataSubject.value}),
       catchError((error: string) => {
         this.isLoadingSubject.next(false); 
+        this.notificationService.onError(error);
         return of({dataState: DataState.ERROR, error})
       })
     );
@@ -95,21 +105,17 @@ export class AppComponent implements OnInit {
     this.filteredSubject.next(level);
     this.appState$ = this.noteService.filterNotes$(level, this.dataSubject.value)
     .pipe(
-      map(response => {;
+      map(response => {
+        this.notificationService.onSuccess(response.message);
            return {dataState: DataState.LOADED, data: response}
       }),
       startWith({dataState: DataState.LOADED, data: this.dataSubject.value}),
       catchError((error: string) => {
+        this.notificationService.onError(error);
         return of({dataState: DataState.ERROR, error})
       })
     );
   }
-
-
-selectNote(note: Note): void {
-this.selectedNoteSubject.next(note); 
-document.getElementById('editNoteButton').click(); 
-}
 
 
 deleteNote(noteId: number): void {
@@ -119,14 +125,21 @@ deleteNote(noteId: number): void {
       this.dataSubject
       .next({ ...response, 
       notes: this.dataSubject.value.notes.filter(note => note.id !== response.notes[0].id)});
+      this.notificationService.onSuccess(response.message);  
+      this.filteredSubject.next(Level.ALL); 
       return {dataState: DataState.LOADED, data: this.dataSubject.value}
 }),
     startWith({dataState: DataState.LOADED, data: this.dataSubject.value}),
     catchError((error: string) => {
+      this.notificationService.onError(error);
       return of({dataState: DataState.ERROR, error})
     })
   );
 }
 
+selectNote(note: Note): void {
+  this.selectedNoteSubject.next(note); 
+  document.getElementById('editNoteButton').click(); 
+  }
 
 }
