@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NoteService } from './service/note.service';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map, startWith, catchError } from 'rxjs/operators';
@@ -13,7 +13,8 @@ import { NotificationService } from './service/notification.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'], 
+  changeDetection: ChangeDetectionStrategy.OnPush
   
 })
 export class AppComponent implements OnInit {
