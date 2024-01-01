@@ -36,7 +36,7 @@
 
 ## Performing the CRUD Operations in the Database can take a while. Thanks to the reactive approach, you will gett immediate feedback. ## No "freezing" in the App thanks to the Loading-State.
 
-![screenshot-loading-state](src\assets\md-assets\loading-state.png)
+![screenshot-loading-state](md-assets/loading-state.png)
 
 ## 6. Continous feedback 
 
