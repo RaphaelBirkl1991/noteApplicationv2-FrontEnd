@@ -1,6 +1,6 @@
 # Note Application with RxJS
 
-<img src="src\assets\md-assets\logo-rxjs.png" alt="rxjs-logo" width="200" height="200" />
+<img src="md-assets/logo-rxjs.png" alt="rxjs-logo" width="200" height="200" />
 
 ## This is the frontend repo for the Note Application. I created this App in an course from getarrays to learn about reactive programming with RxJS. 
 
@@ -17,20 +17,20 @@
 
 ## You have to name a title, give an description and choose a priority. 
 
-![screenshot-adding-new-note](src\assets\md-assets\add-new-note.png)
+![screenshot-adding-new-note](md-assets/add-new-note.png)
 
 
 ## 3. Edit an existing Note
 
 ## You mistyped or simply want to change the Note? 
 
-![screenshot-edit-note](src\assets\md-assets\edit-existing-note.png)
+![screenshot-edit-note](md-assets/edit-existing-note.png)
 
 ## 4. Filter Notes 
 
 ## Don´t get overwhelmed and filter by priority! 
 
-![screenshot-filter-note](src\assets\md-assets\filter-by-priority.png)
+![screenshot-filter-note](md-assets/filter-by-priority.png)
 
 ## 5. Immediate reaction
 
@@ -42,4 +42,4 @@
 
 ## Did something went wrong? Or is everythng fine? You´ll get continous feedback (using ngx-toastr).
 
-![screenshot-continous-feedback](src\assets\md-assets\continious-feedback.png)
+![screenshot-continous-feedback](md-assets/continious-feedback.png)
