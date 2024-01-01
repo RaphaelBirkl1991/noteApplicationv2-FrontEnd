@@ -34,7 +34,8 @@
 
 ## 5. Immediate reaction
 
-## Performing the CRUD Operations in the Database can take a while. Thanks to the reactive approach, you will gett immediate feedback. ## No "freezing" in the App thanks to the Loading-State.
+## Performing the CRUD Operations in the Database can take a while. Thanks to the reactive approach, you will gett immediate feedback.
+## No "freezing" in the App thanks to the Loading-State.
 
 ![screenshot-loading-state](md-assets/loading-state.png)
 
