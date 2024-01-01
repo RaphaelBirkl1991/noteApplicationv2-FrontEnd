@@ -10,7 +10,7 @@
 ## This is the main view of the App. One can create an new Note, delete or update an existing one and filter them by priority. 
 ## The bootstrap UI is was originally from Bootdey (https://bootdey.com/snippets/view/notes-dashboard).
 
-![screenshot-app-overview](src\assets\md-assets\app-overview.png)
+![screenshot-app-overview](C:\Users\rapha\IdeaProjects\noteApplicationv2-FrontEnd\src\assets\md-assets\app-overview.png)
 
 
 ## 2. Adding a new note
