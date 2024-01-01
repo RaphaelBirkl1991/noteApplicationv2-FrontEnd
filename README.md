@@ -1,27 +1,45 @@
-# NoteApplicationv2FrontEnd
+# Note Application with RxJS
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+<img src="src\assets\md-assets\logo-rxjs.png" alt="rxjs-logo" width="200" height="200" />
 
-## Development server
+## This is the frontend repo for the Note Application. I created this App in an course from getarrays to learn about reactive programming with RxJS. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## 1. App overview
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## This is the main view of the App. One can create an new Note, delete or update an existing one and filter them by priority. 
+## The bootstrap UI is was originally from Bootdey (https://bootdey.com/snippets/view/notes-dashboard).
 
-## Build
+![screenshot-app-overview](src\assets\md-assets\app-overview.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## 2. Adding a new note
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## You have to name a title, give an description and choose a priority. 
 
-## Running end-to-end tests
+![screenshot-adding-new-note](src\assets\md-assets\add-new-note.png)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+## 3. Edit an existing Note
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## You mistyped or simply want to change the Note? 
+
+![screenshot-edit-note](src\assets\md-assets\edit-existing-note.png)
+
+## 4. Filter Notes 
+
+## Don´t get overwhelmed and filter by priority! 
+
+![screenshot-filter-note](src\assets\md-assets\filter-by-priority.png)
+
+## 5. Immediate reaction
+
+## Performing the CRUD Operations in the Database can take a while. Thanks to the reactive approach, you will gett immediate feedback. ## No "freezing" in the App thanks to the Loading-State.
+
+![screenshot-loading-state](src\assets\md-assets\loading-state.png)
+
+## 6. Continous feedback 
+
+## Did something went wrong? Or is everythng fine? You´ll get continous feedback (using ngx-toastr).
+
+![screenshot-continous-feedback](src\assets\md-assets\continious-feedback.png)
